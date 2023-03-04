@@ -1,5 +1,5 @@
+from MPU9250.Registers import ADDRESS, REGISTER
 import smbus
-from Registers import REGISTER, ADDRESS
 import time
 
 
@@ -14,7 +14,7 @@ class MPU9250:
         if self._bus:
             self.close()
         self._bus = smbus.SMBus(self._bus_number)
-        real_chip_id = self._bus.read_byte_data(self._device_address, REGISTER.WHO_AM_I)
+        real_chip_id = self._bus.read_byte_data(ADDRESS.GYRO_ADDRESS, REGISTER.WHO_AM_I)
         if self._chip_id != real_chip_id:
             raise Exception("Not correct chip id")
         self._bus.write_byte_data(ADDRESS.GYRO_ADDRESS, REGISTER.PWR_MGMT_1, 0x00)
@@ -29,7 +29,9 @@ class MPU9250:
         y = self._bus.read_word_data(ADDRESS.ACCEL_ADDRESS, REGISTER.ACCEL_YOUT_H)
         z = self._bus.read_word_data(ADDRESS.ACCEL_ADDRESS, REGISTER.ACCEL_ZOUT_H)
         return (x,y,z)
-                
+    
+    def getChipId(self):
+        return self._bus.read_byte_data(ADDRESS.GYRO_ADDRESS, REGISTER.WHO_AM_I)
 
     def close(self):
         if self._bus:

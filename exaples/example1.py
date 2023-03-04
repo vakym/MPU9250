@@ -7,5 +7,6 @@ from MPU9250.MPU9250 import MPU9250
 if __name__ == "__main__":
     sensor = MPU9250(1)
     sensor.init()
+    print(sensor.getChipId())
     print(sensor.readAccel())
     sensor.close()
