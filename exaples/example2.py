@@ -8,8 +8,8 @@ if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("-b", "--bus", help="I2C bus number")
     parser.add_argument("-a", "--address", help="Device address on I2C bus")
-    parser.parse_args()
-    sensor = MPU9250(parser.bus, parser.address)
+    args = parser.parse_args()
+    sensor = MPU9250(args.bus, args.address)
     sensor.init()
     print(sensor.getChipId())
     while True:
