@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 from argparse import ArgumentParser
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from MPU9250.MPU9250 import MPU9250
@@ -15,5 +16,8 @@ if __name__ == "__main__":
     while True:
         print(" Gyro: ")
         print(sensor.readGyro())
+        print("<---------------------->>")
         print(" Accel: ")
         print(sensor.readAccel())
+        print("<---------------------->>")
+        time.sleep(1)
