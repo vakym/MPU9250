@@ -8,14 +8,14 @@ class MPU9250:
     _chipId = 0x71
     _gyroOffset = (0,0,0)
 
-    def __init__(self, bus_number):
-        self._bus_number = bus_number
+    def __init__(self, busNumber, deviceAddress=ADDRESS.GYRO_ADDRESS):
+        self._busNumber = busNumber
+        self._deviceAddress = deviceAddress
 
     def init(self):
         if self._bus:
             self.close()
-        self._bus = SMBus(self._bus_number)
-        self._bus.open()
+        self._bus = SMBus(self._busNumber)
         realChipId = self._bus.read_byte_data(ADDRESS.GYRO_ADDRESS, REGISTER.WHO_AM_I)
         if self._chipId != realChipId:
             raise Exception("Not correct chip id")
