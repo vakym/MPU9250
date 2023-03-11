@@ -16,14 +16,14 @@ class MPU9250:
         if self._bus:
             self.close()
         self._bus = SMBus(self._busNumber)
-        realChipId = self._bus.read_byte_data(ADDRESS.GYRO_ADDRESS, REGISTER.WHO_AM_I)
+        realChipId = self._bus.read_byte_data(self._deviceAddress, REGISTER.WHO_AM_I)
         if self._chipId != realChipId:
             raise Exception("Not correct chip id")
-        self._bus.write_byte_data(ADDRESS.GYRO_ADDRESS, REGISTER.PWR_MGMT_1, 0x00)
-        self._bus.write_byte_data(ADDRESS.GYRO_ADDRESS, REGISTER.SMPLRT_DIV, 0x07)
-        self._bus.write_byte_data(ADDRESS.GYRO_ADDRESS, REGISTER.CONFIG, 0x06)
-        self._bus.write_byte_data(ADDRESS.GYRO_ADDRESS, REGISTER.GYRO_CONFIG, 0x10)
-        self._bus.write_byte_data(ADDRESS.GYRO_ADDRESS, REGISTER.GYRO_CONFIG, 0x10)
+        self._bus.write_byte_data(self._deviceAddress, REGISTER.PWR_MGMT_1, 0x00)
+        self._bus.write_byte_data(self._deviceAddress, REGISTER.SMPLRT_DIV, 0x07)
+        self._bus.write_byte_data(self._deviceAddress, REGISTER.CONFIG, 0x06)
+        self._bus.write_byte_data(self._deviceAddress, REGISTER.GYRO_CONFIG, 0x10)
+        self._bus.write_byte_data(self._deviceAddress, REGISTER.GYRO_CONFIG, 0x10)
         time.sleep(1) #let the sensor be alone with itself
         self._gyroOffset = self.__initGyroOffset()
 
@@ -34,12 +34,12 @@ class MPU9250:
         return (x,y,z)
     
     def getChipId(self):
-        return self._bus.read_byte_data(ADDRESS.GYRO_ADDRESS, REGISTER.WHO_AM_I)
+        return self._bus.read_byte_data(self._deviceAddress, REGISTER.WHO_AM_I)
     
     def readGyro(self):
-        x = self._bus.read_word_data(ADDRESS.GYRO_ADDRESS, REGISTER.GYRO_XOUT_H)
-        y = self._bus.read_word_data(ADDRESS.GYRO_ADDRESS, REGISTER.GYRO_YOUT_H)
-        z = self._bus.read_word_data(ADDRESS.GYRO_ADDRESS, REGISTER.GYRO_ZOUT_H)
+        x = self._bus.read_word_data(self._deviceAddress, REGISTER.GYRO_XOUT_H)
+        y = self._bus.read_word_data(self._deviceAddress, REGISTER.GYRO_YOUT_H)
+        z = self._bus.read_word_data(self._deviceAddress, REGISTER.GYRO_ZOUT_H)
         return (x,y,z)
     
     #TODO digit filter
