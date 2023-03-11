@@ -28,9 +28,9 @@ class MPU9250:
         self._gyroOffset = self.__initGyroOffset()
 
     def readAccel(self):
-        x = self._bus.read_word_data(ADDRESS.ACCEL_ADDRESS, REGISTER.ACCEL_XOUT_H)
-        y = self._bus.read_word_data(ADDRESS.ACCEL_ADDRESS, REGISTER.ACCEL_YOUT_H)
-        z = self._bus.read_word_data(ADDRESS.ACCEL_ADDRESS, REGISTER.ACCEL_ZOUT_H)
+        x = self._bus.read_word_data(self._deviceAddress, REGISTER.ACCEL_XOUT_H)
+        y = self._bus.read_word_data(self._deviceAddress, REGISTER.ACCEL_YOUT_H)
+        z = self._bus.read_word_data(self._deviceAddress, REGISTER.ACCEL_ZOUT_H)
         return (x,y,z)
     
     def getChipId(self):
